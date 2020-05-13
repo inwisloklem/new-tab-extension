@@ -1,3 +1,5 @@
-export interface TopSite extends chrome.topSites.MostVisitedURL {
+import {MostVisitedURL} from 'interfaces/MostVisitedURL'
+
+export interface TopSite extends MostVisitedURL {
   color: string
 }

@@ -1,5 +1,8 @@
 import React, {FunctionComponent} from 'react'
+import {ActionType} from 'store/actionTypes'
+import {Dispatch} from 'redux'
 import {TopSite} from 'interfaces/TopSite'
+import {connect} from 'react-redux'
 import Pin from 'components/Pin'
 import styled from 'styled-components'
 
@@ -29,13 +32,25 @@ const Text = styled.div`
   text-overflow: ellipsis;
 `
 
-type Props = TopSite
+interface Props extends TopSite {
+  isPinned?: boolean
+  removeSiteFromTopSites: (url: string) => void
+}
 
-const TopSitesBlock: FunctionComponent<Props> = ({color, title, url}) => (
+const TopSitesBlock: FunctionComponent<Props> = ({color, isPinned, removeSiteFromTopSites, title, url}) => (
   <Link color={color} href={url} rel="noopener noreferrer">
-    <Pin />
+    <Pin onClick={isPinned ? undefined : () => removeSiteFromTopSites(url) }/>
     <Text>{title}</Text>
   </Link>
 )
 
-export default TopSitesBlock
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  removeSiteFromTopSites(url: string): void {
+    dispatch({
+      type: ActionType.REMOVE_SITE_FROM_TOP_SITES,
+      payload: url,
+    })
+  },
+})
+
+export default connect(null, mapDispatchToProps)(TopSitesBlock)

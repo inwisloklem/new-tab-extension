@@ -1,12 +1,12 @@
-import React, {FunctionComponent, MouseEvent} from 'react'
+import React, {FunctionComponent, SyntheticEvent} from 'react'
 import {ReactComponent as Bookmark} from 'assets/bookmark.svg'
 import styled from 'styled-components'
 
-interface Props {
+interface ButtonProps {
   isActive?: boolean
 }
 
-const Button = styled.button<Props>`
+const Button = styled.button<ButtonProps>`
   position: absolute;
   top: -8px;
   right: 0;
@@ -27,13 +27,21 @@ const Button = styled.button<Props>`
   }
 `
 
-const Pin: FunctionComponent<Props> = ({isActive}) => {
-  const handleClick = (event: MouseEvent): void => {
+interface Props {
+  isActive?: boolean
+  onClick?: (event?: SyntheticEvent) => void
+}
+
+const Pin: FunctionComponent<Props> = ({isActive, onClick}) => {
+  const handleClick = (event: SyntheticEvent): void => {
     event.preventDefault()
+    onClick?.()
   }
 
   return (
-    <Button isActive={isActive} onClick={handleClick}><Bookmark /></Button>
+    <Button isActive={isActive} onClick={handleClick}>
+      <Bookmark />
+    </Button>
   )
 }
 
