@@ -37,9 +37,15 @@ interface Props extends TopSite {
   removeSiteFromTopSites: (url: string) => void
 }
 
-const TopSitesBlock: FunctionComponent<Props> = ({color, isPinned, removeSiteFromTopSites, title, url}) => (
+const TopSitesBlock: FunctionComponent<Props> = ({
+  color,
+  isPinned,
+  removeSiteFromTopSites,
+  title,
+  url,
+}) => (
   <Link color={color} href={url} rel="noopener noreferrer">
-    <Pin onClick={isPinned ? undefined : () => removeSiteFromTopSites(url) }/>
+    <Pin onClick={isPinned ? undefined : () => removeSiteFromTopSites(url)} />
     <Text>{title}</Text>
   </Link>
 )
