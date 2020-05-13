@@ -34,7 +34,7 @@ const Title = styled.h2`
 `
 
 interface Props {
-  sites: TopSite[]
+  sites?: TopSite[]
 }
 
 const Page: FunctionComponent<Props> = ({sites}) => (
@@ -47,7 +47,7 @@ const Page: FunctionComponent<Props> = ({sites}) => (
 )
 
 const mapStateToProps = (state: AppState) => ({
-  topSites: state.topSites.sites,
+  sites: state.topSites.sites,
 })
 
 export default connect(mapStateToProps)(Page)

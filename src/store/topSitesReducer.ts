@@ -7,10 +7,9 @@ const INITIAL_STATE = {
   sites: [],
 }
 
-export function topSitesReducer(
-  state: AppState['topSites'] = INITIAL_STATE,
-  action: Action.SetTopSites
-) {
+type State = AppState['topSites']
+
+export function topSitesReducer(state: State = INITIAL_STATE, action: Action.SetTopSites) {
   switch (action.type) {
     case ActionType.SET_TOP_SITES: {
       const coloredTopSites = action.payload.map(topSite => ({

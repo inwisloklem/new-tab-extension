@@ -6,8 +6,8 @@ import createSagaMiddleware from 'redux-saga'
 import loggerMiddleware from 'redux-logger'
 
 export interface AppState {
-  readonly topSites: {
-    sites: TopSite[]
+  topSites: {
+    readonly sites: TopSite[]
   }
 }
 
