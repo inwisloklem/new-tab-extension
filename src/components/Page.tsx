@@ -3,7 +3,7 @@ import {AppState} from 'store'
 import {Style} from 'style'
 import {TopSite} from 'interfaces/TopSite'
 import {connect} from 'react-redux'
-import TopSitesBlock from 'components/TopSitesBlock'
+import Block from 'components/Block'
 import styled from 'styled-components'
 
 const Main = styled.div`
@@ -40,9 +40,9 @@ interface Props {
 const Page: FunctionComponent<Props> = ({sites}) => (
   <Main>
     <Style />
-    <Title>Top sites</Title>
 
-    <Table>{sites && sites.map(item => <TopSitesBlock key={item.url} {...item} />)}</Table>
+    <Title>Top sites</Title>
+    <Table>{sites && sites.map(site => <Block key={site.url} site={site} />)}</Table>
   </Main>
 )
 

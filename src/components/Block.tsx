@@ -10,7 +10,7 @@ interface LinkProps {
   color: string
 }
 
-const Link = styled.a<LinkProps>`
+const Link = styled.a`
   overflow: hidden;
   position: relative;
   display: flex;
@@ -32,31 +32,31 @@ const Text = styled.div`
   text-overflow: ellipsis;
 `
 
-interface Props extends TopSite {
+interface Props {
   isPinned?: boolean
-  removeSiteFromTopSites: (url: string) => void
+  moveSiteFromTopSitesToPinnedSites: (site: TopSite) => void
+  site: TopSite
 }
 
-const TopSitesBlock: FunctionComponent<Props> = ({
-  color,
-  isPinned,
-  removeSiteFromTopSites,
-  title,
-  url,
-}) => (
-  <Link color={color} href={url} rel="noopener noreferrer">
-    <Pin onClick={isPinned ? undefined : () => removeSiteFromTopSites(url)} />
-    <Text>{title}</Text>
-  </Link>
-)
+const Block: FunctionComponent<Props> = ({isPinned, moveSiteFromTopSitesToPinnedSites, site}) => {
+  console.info(moveSiteFromTopSitesToPinnedSites)
+  const {color, title, url} = site
+
+  return (
+    <Link color={color} href={url} rel='noopener noreferrer'>
+      <Pin onClick={isPinned ? undefined : () => moveSiteFromTopSitesToPinnedSites(site)} />
+      <Text>{title}</Text>
+    </Link>
+  )
+}
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  removeSiteFromTopSites(url: string): void {
+  moveSiteFromTopSitesToPinnedSites(site: TopSite): void {
     dispatch({
-      type: ActionType.REMOVE_SITE_FROM_TOP_SITES,
-      payload: url,
+      type: ActionType.MOVE_SITE_FROM_TOP_SITES_TO_PINNED_SITES,
+      payload: site,
     })
   },
 })
 
-export default connect(null, mapDispatchToProps)(TopSitesBlock)
+export default connect(null, mapDispatchToProps)(Block)

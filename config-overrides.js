@@ -10,9 +10,8 @@ module.exports = {
     config.devtool = 'eval-cheap-module-source-map'
     config.entry = config.entry.filter(entry => !entry.includes('webpackHotDevClient'))
     config.output.path = path.resolve(appDirectory, outputPath)
-    config.plugins = (config.plugins || []).concat([
-      new CopyWebpackPlugin([{from: 'public'}], {ignore: ['*.html']}),
-    ])
+    config.plugins = (config.plugins || [])
+      .concat([new CopyWebpackPlugin([{from: 'public'}], {ignore: ['*.html']})])
     return config
   },
 

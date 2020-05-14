@@ -3,18 +3,18 @@ import {Action} from 'store/actions'
 import {AppState} from 'store'
 import {convertToHEX} from 'utils/convertToHEX'
 
-const INITIAL_STATE = {
+const initialState = {
   sites: [],
 }
 
 type State = AppState['topSites']
 
-export function topSitesReducer(state: State = INITIAL_STATE, action: Action) {
+export function topSitesReducer(state: State = initialState, action: Action) {
   switch (action.type) {
     case ActionType.REMOVE_SITE_FROM_TOP_SITES: {
       return {
         ...state,
-        sites: state.sites.filter(site => site.url !== action.payload),
+        sites: state.sites.filter(site => site.url !== action.payload.url),
       }
     }
     case ActionType.SET_TOP_SITES: {
