@@ -1,62 +1,46 @@
 import React, {FunctionComponent} from 'react'
-import {ActionType} from 'store/actionTypes'
-import {Dispatch} from 'redux'
 import {TopSite} from 'interfaces/TopSite'
-import {connect} from 'react-redux'
-import Pin from 'components/Pin'
+import Item from 'components/Item'
 import styled from 'styled-components'
 
-interface LinkProps {
-  color: string
-}
-
-const Link = styled.a`
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  background-color: ${props => props.color};
-  border: none;
-  border-radius: 0.25rem;
-  color: var(--color-text);
-  font-size: 16px;
-  text-decoration: none;
+const Section = styled.div`
+  &:not(:last-of-type) {
+    margin-bottom: 2rem;
+  }
 `
 
-const Text = styled.div`
-  overflow: hidden;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+const Table = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 16rem));
+  grid-template-rows: 4rem;
+  grid-auto-columns: minmax(0, 16rem);
+  grid-auto-rows: 4rem;
+  gap: 1rem;
+`
+
+const Title = styled.h2`
+  margin-bottom: 2rem;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--color-text);
 `
 
 interface Props {
-  isPinned?: boolean
-  moveSiteFromTopSitesToPinnedSites: (site: TopSite) => void
-  site: TopSite
+  sites?: TopSite[]
+  title: string
 }
 
-const Block: FunctionComponent<Props> = ({isPinned, moveSiteFromTopSitesToPinnedSites, site}) => {
-  console.info(moveSiteFromTopSitesToPinnedSites)
-  const {color, title, url} = site
+const Block: FunctionComponent<Props> = ({sites = [], title}) => {
+  if (sites.length === 0) {
+    return null
+  }
 
   return (
-    <Link color={color} href={url} rel='noopener noreferrer'>
-      <Pin onClick={isPinned ? undefined : () => moveSiteFromTopSitesToPinnedSites(site)} />
-      <Text>{title}</Text>
-    </Link>
+    <Section>
+      <Title>{title}</Title>
+      <Table>{sites.map(site => <Item key={site.url} site={site} />)}</Table>
+    </Section>
   )
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  moveSiteFromTopSitesToPinnedSites(site: TopSite): void {
-    dispatch({
-      type: ActionType.MOVE_SITE_FROM_TOP_SITES_TO_PINNED_SITES,
-      payload: site,
-    })
-  },
-})
-
-export default connect(null, mapDispatchToProps)(Block)
+export default Block

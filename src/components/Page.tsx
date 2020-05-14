@@ -17,37 +17,22 @@ const Main = styled.div`
   background: linear-gradient(to right, var(--color-background-from), var(--color-background-to));
 `
 
-const Table = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 16rem));
-  grid-template-rows: 4rem;
-  grid-auto-columns: minmax(0, 16rem);
-  grid-auto-rows: 4rem;
-  gap: 1rem;
-`
-
-const Title = styled.h2`
-  margin-bottom: 2rem;
-  font-size: 32px;
-  line-height: 1;
-  color: var(--color-text);
-`
-
 interface Props {
-  sites?: TopSite[]
+  topSites?: TopSite[]
+  pinnedSites?: TopSite[]
 }
 
-const Page: FunctionComponent<Props> = ({sites}) => (
+const Page: FunctionComponent<Props> = ({pinnedSites, topSites}) => (
   <Main>
     <Style />
-
-    <Title>Top sites</Title>
-    <Table>{sites && sites.map(site => <Block key={site.url} site={site} />)}</Table>
+    <Block sites={pinnedSites} title='Pinned sites' />
+    <Block sites={topSites} title='Top sites' />
   </Main>
 )
 
 const mapStateToProps = (state: AppState) => ({
-  sites: state.topSites.sites,
+  pinnedSites: state.pinnedSites.sites,
+  topSites: state.topSites.sites,
 })
 
 export default connect(mapStateToProps)(Page)
