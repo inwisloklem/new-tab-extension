@@ -1,5 +1,5 @@
 import React, {FunctionComponent} from 'react'
-import {AppState} from 'store'
+import {AppState} from 'interfaces/AppState'
 import {Style} from 'style'
 import {TopSite} from 'interfaces/TopSite'
 import {connect} from 'react-redux'
@@ -25,7 +25,7 @@ interface Props {
 const Page: FunctionComponent<Props> = ({pinnedSites, topSites}) => (
   <Main>
     <Style />
-    <Block sites={pinnedSites} title='Pinned sites' />
+    <Block isPinned sites={pinnedSites} title='Pinned sites' />
     <Block sites={topSites} title='Top sites' />
   </Main>
 )

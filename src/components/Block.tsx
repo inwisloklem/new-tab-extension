@@ -26,11 +26,12 @@ const Title = styled.h2`
 `
 
 interface Props {
+  isPinned?: boolean
   sites?: TopSite[]
   title: string
 }
 
-const Block: FunctionComponent<Props> = ({sites = [], title}) => {
+const Block: FunctionComponent<Props> = ({isPinned, sites = [], title}) => {
   if (sites.length === 0) {
     return null
   }
@@ -38,7 +39,7 @@ const Block: FunctionComponent<Props> = ({sites = [], title}) => {
   return (
     <Section>
       <Title>{title}</Title>
-      <Table>{sites.map(site => <Item key={site.url} site={site} />)}</Table>
+      <Table>{sites.map(site => <Item isPinned={isPinned} key={site.url} site={site} />)}</Table>
     </Section>
   )
 }

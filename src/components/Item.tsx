@@ -34,29 +34,30 @@ const Text = styled.div`
 
 interface Props {
   isPinned?: boolean
-  moveSiteFromTopSitesToPinnedSites: (site: TopSite) => void
   site: TopSite
+  moveToPinnedSites: (site: TopSite) => void
 }
 
-const Item: FunctionComponent<Props> = ({isPinned, moveSiteFromTopSitesToPinnedSites, site}) => {
-  console.info(moveSiteFromTopSitesToPinnedSites)
+const Item: FunctionComponent<Props> = ({isPinned, moveToPinnedSites, site}) => {
   const {color, title, url} = site
 
   return (
     <Link color={color} href={url} rel='noopener noreferrer'>
-      <Pin onClick={isPinned ? undefined : () => moveSiteFromTopSitesToPinnedSites(site)} />
+      <Pin isActive={isPinned} onClick={isPinned ? undefined : () => moveToPinnedSites(site)} />
       <Text>{title}</Text>
     </Link>
   )
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  moveSiteFromTopSitesToPinnedSites(site: TopSite): void {
-    dispatch({
-      type: ActionType.MOVE_SITE_FROM_TOP_SITES_TO_PINNED_SITES,
-      payload: site,
-    })
-  },
-})
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    moveToPinnedSites(site: TopSite): void {
+      dispatch({
+        type: ActionType.MOVE_SITE_FROM_TOP_SITES_TO_PINNED_SITES,
+        payload: site,
+      })
+    },
+  }
+}
 
 export default connect(null, mapDispatchToProps)(Item)

@@ -1,6 +1,6 @@
 import {ActionType} from 'store/actionTypes'
 import {Action} from 'store/actions'
-import {AppState} from 'store'
+import {AppState} from 'interfaces/AppState'
 
 const initialState = {
   sites: [],

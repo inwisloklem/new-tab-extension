@@ -9,7 +9,7 @@
     "64": "icon64.png",
     "32": "icon32.png"
   },
-  "permissions": ["topSites"],
+  "permissions": ["storage", "topSites"],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "chrome_url_overrides": {
     "newtab": "index.html"
