@@ -35,15 +35,24 @@ const Text = styled.div`
 interface Props {
   isPinned?: boolean
   site: TopSite
-  moveToPinnedSites: (site: TopSite) => void
+  movePinnedSiteToTopSites: (site: TopSite) => void
+  moveTopSiteToPinnedSites: (site: TopSite) => void
 }
 
-const Item: FunctionComponent<Props> = ({isPinned, moveToPinnedSites, site}) => {
+const Item: FunctionComponent<Props> = ({
+  isPinned,
+  movePinnedSiteToTopSites,
+  moveTopSiteToPinnedSites,
+  site,
+}) => {
   const {color, title, url} = site
 
   return (
     <Link color={color} href={url} rel='noopener noreferrer'>
-      <Pin isActive={isPinned} onClick={isPinned ? undefined : () => moveToPinnedSites(site)} />
+      <Pin
+        isActive={isPinned}
+        onClick={() => (isPinned ? movePinnedSiteToTopSites : moveTopSiteToPinnedSites)(site)}
+      />
       <Text>{title}</Text>
     </Link>
   )
@@ -51,9 +60,15 @@ const Item: FunctionComponent<Props> = ({isPinned, moveToPinnedSites, site}) => 
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    moveToPinnedSites(site: TopSite): void {
+    movePinnedSiteToTopSites(site: TopSite): void {
       dispatch({
-        type: ActionType.MOVE_SITE_FROM_TOP_SITES_TO_PINNED_SITES,
+        type: ActionType.MOVE_PINNED_SITE_TO_TOP_SITES,
+        payload: site,
+      })
+    },
+    moveTopSiteToPinnedSites(site: TopSite): void {
+      dispatch({
+        type: ActionType.MOVE_TOP_SITE_TO_PINNED_SITES,
         payload: site,
       })
     },

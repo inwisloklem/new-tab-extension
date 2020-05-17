@@ -6,13 +6,18 @@ interface AddSiteToPinnedSites {
   payload: TopSite
 }
 
-interface MoveSiteFromTopSitesToPinnedSites {
-  type: ActionType.ADD_SITE_TO_PINNED_SITES
+interface RemoveSiteFromPinnedSites {
+  type: ActionType.REMOVE_SITE_FROM_PINNED_SITES
   payload: TopSite
 }
 
-interface RemoveSiteFromTopSites {
-  type: ActionType.REMOVE_SITE_FROM_TOP_SITES
+interface RemovePinnedSitesFromTopSites {
+  type: ActionType.SET_DIFFERENCE_TO_TOP_SITES
+  payload: undefined
+}
+
+interface MoveSiteFromTopSitesToPinnedSites {
+  type: ActionType.ADD_SITE_TO_PINNED_SITES
   payload: TopSite
 }
 
@@ -24,5 +29,6 @@ interface SetTopSites {
 export type Action =
   | AddSiteToPinnedSites
   | MoveSiteFromTopSitesToPinnedSites
-  | RemoveSiteFromTopSites
+  | RemovePinnedSitesFromTopSites
+  | RemoveSiteFromPinnedSites
   | SetTopSites

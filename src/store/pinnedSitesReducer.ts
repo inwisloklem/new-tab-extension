@@ -16,6 +16,12 @@ export function pinnedSitesReducer(state: State = initialState, action: Action) 
         sites: [...state.sites, action.payload],
       }
     }
+    case ActionType.REMOVE_SITE_FROM_PINNED_SITES: {
+      return {
+        ...state,
+        sites: state.sites.filter(site => site.url !== action.payload.url),
+      }
+    }
     default: {
       return state
     }

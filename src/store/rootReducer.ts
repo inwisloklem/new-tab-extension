@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux'
 import {localStorage} from 'redux-persist-webextension-storage'
 import {persistReducer} from 'redux-persist'
-import {pinnedSitesReducer} from './pinnedSitesReducer'
+import {pinnedSitesReducer} from 'store/pinnedSitesReducer'
 import {topSitesReducer} from 'store/topSitesReducer'
 
 const localStorageConfig = {
