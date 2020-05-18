@@ -6,6 +6,14 @@ interface AddSiteToPinnedSites {
   payload: TopSite
 }
 
+interface ReorderPinnedSites {
+  type: ActionType.REORDER_PINNED_SITES
+  payload: {
+    oldIndex: number
+    newIndex: number
+  }
+}
+
 interface RemoveSiteFromPinnedSites {
   type: ActionType.REMOVE_SITE_FROM_PINNED_SITES
   payload: TopSite
@@ -29,6 +37,7 @@ interface SetTopSites {
 export type Action =
   | AddSiteToPinnedSites
   | MoveSiteFromTopSitesToPinnedSites
+  | ReorderPinnedSites
   | RemovePinnedSitesFromTopSites
   | RemoveSiteFromPinnedSites
   | SetTopSites

@@ -1,6 +1,7 @@
 import {ActionType} from 'store/actionTypes'
 import {Action} from 'store/actions'
 import {AppState} from 'interfaces/AppState'
+import {move} from 'utils/move'
 
 const initialState = {
   sites: [],
@@ -14,6 +15,12 @@ export function pinnedSitesReducer(state: State = initialState, action: Action) 
       return {
         ...state,
         sites: [...state.sites, action.payload],
+      }
+    }
+    case ActionType.REORDER_PINNED_SITES: {
+      return {
+        ...state,
+        sites: move(state.sites, action.payload.oldIndex, action.payload.newIndex),
       }
     }
     case ActionType.REMOVE_SITE_FROM_PINNED_SITES: {

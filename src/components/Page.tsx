@@ -1,5 +1,8 @@
 import React, {FunctionComponent} from 'react'
+import {ActionType} from 'store/actionTypes'
 import {AppState} from 'interfaces/AppState'
+import {Dispatch} from 'redux'
+import {SortEnd} from 'react-sortable-hoc'
 import {Style} from 'style'
 import {TopSite} from 'interfaces/TopSite'
 import {connect} from 'react-redux'
@@ -20,19 +23,31 @@ const Main = styled.div`
 interface Props {
   topSites?: TopSite[]
   pinnedSites?: TopSite[]
+  reorderPinnedSites: ({oldIndex, newIndex}: SortEnd) => void
 }
 
-const Page: FunctionComponent<Props> = ({pinnedSites, topSites}) => (
+const Page: FunctionComponent<Props> = ({pinnedSites, reorderPinnedSites, topSites}) => (
   <Main>
     <Style />
-    <Block isPinned sites={pinnedSites} title='Pinned sites' />
+    <Block isPinned sites={pinnedSites} title='Pinned sites' onSortEnd={reorderPinnedSites} />
     <Block sites={topSites} title='Top sites' />
   </Main>
 )
+
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    reorderPinnedSites({oldIndex, newIndex}: SortEnd) {
+      dispatch({
+        type: ActionType.REORDER_PINNED_SITES,
+        payload: {oldIndex, newIndex},
+      })
+    },
+  }
+}
 
 const mapStateToProps = (state: AppState) => ({
   pinnedSites: state.pinnedSites.sites,
   topSites: state.topSites.sites,
 })
 
-export default connect(mapStateToProps)(Page)
+export default connect(mapStateToProps, mapDispatchToProps)(Page)

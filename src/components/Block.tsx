@@ -1,4 +1,5 @@
 import React, {FunctionComponent} from 'react'
+import {SortableContainer, SortableElement, SortEnd} from 'react-sortable-hoc'
 import {TopSite} from 'interfaces/TopSite'
 import Item from 'components/Item'
 import styled from 'styled-components'
@@ -29,17 +30,38 @@ interface Props {
   isPinned?: boolean
   sites?: TopSite[]
   title: string
+  onSortEnd?: ({oldIndex, newIndex}: SortEnd) => void
 }
 
-const Block: FunctionComponent<Props> = ({isPinned, sites = [], title}) => {
+interface SortableElementProps {
+  value: TopSite
+}
+
+const Block: FunctionComponent<Props> = ({isPinned, sites = [], onSortEnd, title}) => {
   if (sites.length === 0) {
     return null
   }
 
+  const SortableItem = SortableElement(({value}: {value: TopSite}) => (
+    <Item isPinned={isPinned} key={value.url} site={value} />
+  ))
+  const SortableTable = SortableContainer(({items}: {items: TopSite[]}) => (
+    <Table>
+      {items.map((value: TopSite, index: number) => (
+        <SortableItem index={index} key={value.url} value={value} />
+      ))}
+    </Table>
+  ))
+
   return (
     <Section>
       <Title>{title}</Title>
-      <Table>{sites.map(site => <Item isPinned={isPinned} key={site.url} site={site} />)}</Table>
+
+      {onSortEnd ? (
+        <SortableTable axis='xy' items={sites} pressDelay={200} onSortEnd={onSortEnd} />
+      ) : (
+        <Table>{sites.map(site => <Item isPinned={isPinned} key={site.url} site={site} />)}</Table>
+      )}
     </Section>
   )
 }
