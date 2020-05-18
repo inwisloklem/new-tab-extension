@@ -16,8 +16,6 @@ const Main = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding: 2rem;
-  height: 100%;
-  background: linear-gradient(to right, var(--color-background-from), var(--color-background-to));
 `
 
 interface Props {

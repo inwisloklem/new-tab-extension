@@ -8,11 +8,8 @@ export const Style = createGlobalStyle`
     --color-text: #fff;
   }
 
-  html, body {
-    overflow: hidden;
-    height: 100%;
-    min-height: 100vh;
-
+  body {
+    background: linear-gradient(to right, var(--color-background-from), var(--color-background-to));
   }
 
   body, button {
